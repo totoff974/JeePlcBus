@@ -1,0 +1,16 @@
+=== Configuration
+Après installation du plugin, il vous suffit de l’activer et de renseigner les paramètres suivant :
+
+-> Port PLCBus : le port sur lequel est connecté le module PLCBUS-1141 (par exemple : "/dev/ttyUSB0")
+-> C : l'IP pour l'écoute des commandes envoyées. Pour une installation locale mettre : "localhost". (Ce paramètre servira plus tard pour une installation en mode esclave)
+-> Port du Socket : Le port pour le socket d'écoute des commandes envoyées (par exemple : "5151").
+-> Nombre de Phases : D'indiquer le nombre de phases de votre installation.  Il faut choisir le type d’installation qui vous correspond (Monophasé = 1 ou Triphasé = 3)
+-> UserCode : choisir un « Code Utilisateur », ce code devra être utilisé pour communiquer avec les modules PLCBUS (mettre "FF" dans la majorité des cas)
+
+[IMPORTANT]
+Obligatoirement remplir les champs Port PLCBus / Port PLCBus / Port du Socket pour le bon fonctionnement du plugin.
+
+[TIP]
+Après sauvegarde le démon doit se lancer.
+
+image::../images/JeePlcBus1.png[]

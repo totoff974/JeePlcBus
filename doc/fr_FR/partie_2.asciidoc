@@ -1,0 +1,22 @@
+=== Configuration des équipements
+La configuration des équipements PlcBus est accessible à partir du menu plugin.
+
+-> Sélectionner "Ajouter"
+-> Renseigner le "Nom de l'équipement" (par exemple : "Salle de Bain")
+-> Renseigner les champs habituels (Objet parent / Catégorie )
+-> Activer à minima l'équipement
+-> Obliglatoire renseigner l'adresse du module (par exemple :"A2")
+-> Enfin faite "Sauvegarder"
+
+Les commandes par défaut seront automatiquement renseignées. A savoir, action "ON", action "OFF" et action "DIM".
+
+[IMPORTANT]
+L'adresse du module est indispensable.
+
+[TIP]
+Vous avez la possibilité de les afficher ou non via la colonne afficher de chaque commande. Si le module n'a pas la variation par exemple.
+
+image::../images/JeePlcBus2.png[]
+
+image::../images/JeePlcBus3.png[]
+
