@@ -156,7 +156,7 @@ class JeePlcBus extends eqLogic {
 		}
 		
 		// construction de la commande
-		$cmd_exe = '/usr/bin/perl ' . $plcbus_path . '/srv_plc';
+		$cmd_exe = 'sudo /usr/bin/perl ' . $plcbus_path . '/srv_plc';
 		$cmd_exe .= ' --device=' . $port;
 		$cmd_exe .= ' --user=' . $plcbus_usercode;
 		$cmd_exe .= ' --phase=' . $phase;		

@@ -44,7 +44,7 @@ include_file('core', 'JeePlcBus', 'config', 'JeePlcBus');
 			$tr .= '<td>'.$d_code.'</td>';
 			$tr .= '<td>'.$d_retour.'</td>';
 			
-			if ($d_retour != 'ERROR, pas de reponse') {
+			if ($d_retour != 'ERROR pas de reponse') {
 				$tr .= '<td><span class="btn btn-xs btn-success">OK</span></td>';
 			}
 			else {
