@@ -6,9 +6,8 @@
     <icon>fa fa-plug</icon>
     <licence>AGPL</licence>
     <author>Christophe CHAMANT</author>
-    <installation>Installation automatique des dépendances pour Perl libdevice-serialport-perl et IOSelectBuffered.pm</installation>
     <require>2.3</require>
-	<version>2.1</version>
+	<version>2.2</version>
     <category>automation protocol</category>
 	<hasDependency>1</hasDependency>
 </info>

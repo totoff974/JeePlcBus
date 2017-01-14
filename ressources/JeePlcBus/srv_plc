@@ -119,14 +119,14 @@ sub plcbus_tx_command
 
 	my @params_data = split(/\,/, $params); # Split the command in its various parts (Example: A1,ON; D4,DIM,10,1)
 	if (!defined($params_data[1])) {
-		print ("ERROR Illegal Command Format\:\:") if $verbose;
+		print ("ERREUR Illegal Command Format\:\:") if $verbose;
 		return 0;
 	}
 	my @homeunit = split(//, $params_data[0]);
 	my $home = unpack ('C*', $homeunit[0]) - 65;
 	my $unit = substr ($params_data[0], 1, 2);
 	if (($home =~ /\D/) || ($home < 0) || ($home > 16) || ($unit =~ /\D/) || ($unit <1) || ($unit > 16)) {
-		print ("ERROR Illegal HomeUnit Code\:\:") if $verbose;
+		print ("ERREUR Illegal HomeUnit Code\:\:") if $verbose;
 		return 0;
 	}
 	my $plcbus_homeunit = $home*16 + $unit - 1;
@@ -137,7 +137,7 @@ sub plcbus_tx_command
 
 	# if command is not valid return to main
 	if (!defined ($plcbus_command_to_hex{$params_data[1]})) {
-		print ("ERROR Unknown PLCBUS Command\:\:") if $verbose;
+		print ("ERREUR Unknown PLCBUS Command\:\:") if $verbose;
 		return 0;
 	}
 
@@ -149,12 +149,12 @@ sub plcbus_tx_command
 	$plcbus_command += 0x40 if ($phase == 3);
 	$plcbus_data1 = $params_data[2] if defined($params_data[2]);
 	if (($plcbus_data1 =~/\D/) || ($plcbus_data1 < 0) || ($plcbus_data1 > 100)) {
-		print ("ERROR Illegal Data1 Value\:\:") if $verbose;
+		print ("ERREUR Illegal Data1 Value\:\:") if $verbose;
 		return 0;
 	}
 	$plcbus_data2 = $params_data[3] if defined($params_data[3]);
 	if (($plcbus_data2 =~/\D/) || ($plcbus_data2 < 0) || ($plcbus_data2 > 100)) {
-		print ("ERROR Illegal Data2 Value\:\:") if $verbose;
+		print ("ERREUR Illegal Data2 Value\:\:") if $verbose;
 		return 0;
 	}
 
@@ -187,7 +187,7 @@ sub plcbus_tx_command
 		$result = plcbus_check_status($plcbus_homeunit, $plcbus_command);
 		last unless (!$result);
 	}
-	print ("ERROR pas de reponse\:\:") if !$result;
+	print ("ERREUR pas de reponse\:\:") if !$result;
 	return $result;
 }
 
@@ -353,7 +353,7 @@ die "Invalid number of Phases - Legal values are 1 or 3. Stopped\n" unless (($ph
 
 # Open serial port to the PLCBUS controller
 #
-#$serport=Device::SerialPort->new($serdev) or die "Error opening serial port: $!\:\:";
+#$serport=Device::SerialPort->new($serdev) or die "ERREUR opening serial port: $!\:\:";
 #$serport->baudrate(9600);
 #$serport->databits(8);
 #$serport->parity("none");

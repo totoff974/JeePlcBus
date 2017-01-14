@@ -181,19 +181,19 @@ class JeePlcBus extends eqLogic {
 		//if ($retour_etat == true) {
 			$tab_retour = explode("::", $retour_action);
 			
-			foreach($tab_retour as $result) {
-				if ($result != ''){
-					log::add('JeePlcBus', 'debug', 'Action executée : ' . $result);
-				}
-			}			
+			// foreach($tab_retour as $result) {
+				// if ($result != ''){
+					// log::add('JeePlcBus', 'debug', 'Action executée : ' . $result);
+				// }
+			// }			
 		//}
-		
-		return;
+		log::add('JeePlcBus', 'debug', 'Action executée : ' . $tab_retour[0]);
+		return $tab_retour[0];
 	}
 	
  	public function Requete_MaJ($d_code) {
 		$requete_Info = self::ActionCommande($d_code, 'STATUS_REQUEST', NULL, NULL, true);	
-		return;
+		return $requete_Info;
 	}
 
     public function autoAjoutCommande($device_code, $dimmable) {
