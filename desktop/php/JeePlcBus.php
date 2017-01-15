@@ -128,9 +128,9 @@ foreach ($eqLogics as $eqLogic) {
 							<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{DIMMABLE}}" data-l1key="configuration" data-l2key="dimmable"/>
 							</div>
 					<?php } ?>
-<!--  					<div class="col-sm-2">
+  					<div class="col-sm-2">
 						<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Retour d'état}}" data-l1key="configuration" data-l2key="retour_etat"/>
-					</div>  -->
+					</div>
 				</div>
 
 			</fieldset> 
