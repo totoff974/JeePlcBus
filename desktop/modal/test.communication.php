@@ -38,7 +38,7 @@ include_file('core', 'JeePlcBus', 'config', 'JeePlcBus');
 	$code_maison = init('codemaison');
 		for ($i=1; $i<17; $i++) {
 			$d_code = $code_maison.$i;
-			$d_retour = JeePlcBus::Requete_MaJ($d_code);
+			$d_retour = JeePlcBus::Requete_MaJ($d_code, true);
 			
 			$tr = '<tr>';
 			$tr .= '<td>'.$d_code.'</td>';

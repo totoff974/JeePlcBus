@@ -7,7 +7,7 @@
     <licence>AGPL</licence>
     <author>Christophe CHAMANT</author>
     <require>2.3</require>
-	<version>2.2</version>
+	<version>3.0</version>
     <category>automation protocol</category>
 	<hasDependency>1</hasDependency>
 </info>

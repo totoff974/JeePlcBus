@@ -43,9 +43,6 @@ $listCmdJeePlcBus_NODIM = array(
     array(
         'name' => 'Off',
         'type' => 'action',
-		'configuration' => array(
-			'updateCmdToValue' => '0',
-        ),
         'subType' => 'other',
 		'order' => 1,
         'description' => 'Pour envoyer ON au module',
@@ -56,9 +53,6 @@ $listCmdJeePlcBus_NODIM = array(
     array(
         'name' => 'On',
         'type' => 'action',
-		'configuration' => array(
-			'updateCmdToValue' => '99',
-        ),
         'subType' => 'other',
 		'order' => 0,
         'description' => 'Pour envoyer ON au module',
@@ -106,7 +100,6 @@ $listCmdJeePlcBus_DIM = array(
         'name' => '25',
         'type' => 'action',
 		'configuration' => array(
-			'updateCmdToValue' => '25',
 			'tmps_dim' => '5',
         ),
         'subType' => 'other',
@@ -120,7 +113,6 @@ $listCmdJeePlcBus_DIM = array(
         'name' => '50',
         'type' => 'action',
 		'configuration' => array(
-			'updateCmdToValue' => '50',
 			'tmps_dim' => '5',
         ),
         'subType' => 'other',
@@ -134,7 +126,6 @@ $listCmdJeePlcBus_DIM = array(
         'name' => '75',
         'type' => 'action',
 		'configuration' => array(
-			'updateCmdToValue' => '75',
 			'tmps_dim' => '5',
         ),
         'subType' => 'other',
@@ -148,7 +139,6 @@ $listCmdJeePlcBus_DIM = array(
         'name' => 'Off',
         'type' => 'action',
 		'configuration' => array(
-			'updateCmdToValue' => '0',
         ),
         'subType' => 'other',
 		'order' => 1,
@@ -160,9 +150,6 @@ $listCmdJeePlcBus_DIM = array(
     array(
         'name' => 'On',
         'type' => 'action',
-		'configuration' => array(
-			'updateCmdToValue' => '99',
-        ),
         'subType' => 'other',
 		'order' => 0,
         'description' => 'Pour envoyer ON au module',

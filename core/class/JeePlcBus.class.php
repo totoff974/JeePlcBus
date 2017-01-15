@@ -129,7 +129,7 @@ class JeePlcBus extends eqLogic {
       }
      */
 	
-	public function ActionCommande($d_code, $d_cmd, $data1, $data2, $retour_etat) {
+	public function ActionCommande($d_code, $d_cmd, $data1, $data2, $retour_etat, $test_com) {
 
 		
 		// chemin du dossier de la passerelle
@@ -178,21 +178,68 @@ class JeePlcBus extends eqLogic {
 		$retour_action = shell_exec($cmd_exe);
 
 		// traitement de la reponse si demande
-		//if ($retour_etat == true) {
+		if ($retour_etat == true) {
 			$tab_retour = explode("::", $retour_action);
 			
-			// foreach($tab_retour as $result) {
-				// if ($result != ''){
-					// log::add('JeePlcBus', 'debug', 'Action executée : ' . $result);
-				// }
-			// }			
-		//}
-		log::add('JeePlcBus', 'debug', 'Action executée : ' . $tab_retour[0]);
-		return $tab_retour[0];
+			if ($test_com == true) {
+				return $tab_retour[0];
+			}
+			
+			if ($test_com == false) {
+				// si pas d'erreur de reponse du module
+				if ($tab_retour[0] != 'ERREUR pas de reponse' OR $d_cmd != 'STATUS_REQUEST') {
+					$act_ret = explode(",", $tab_retour[0]);
+
+					// vérification que l'ordre envoyé et le 1er retour d'état est identique pour mettre à jour l'état de l'équipement
+					if (($act_ret[0] == $d_code AND $act_ret[1] == $d_cmd AND $act_ret[2] == $data1 AND $act_ret[3] == $data2) OR $d_cmd == 'STATUS_REQUEST') {
+						
+						// si vrai alors on met à jour l'équipement avec le retour d'état
+						foreach (eqLogic::getCmd() as $info) {
+							$info->setValue($act_ret[2]);
+							$info->save();
+							$info->event($act_ret[2]);
+							
+						}
+						log::add('JeePlcBus', 'debug', 'Retour état réel : ' . $act_ret[0] . ',' . $act_ret[1] . ',' . $act_ret[2] . ',' . $act_ret[3]);
+					}
+					
+					// Sinon on essaye une interrogation forcée du module
+					else {
+						log::add('JeePlcBus', 'debug', 'MAJ forcée retour état réel pour ' . $d_code);
+						self::Requete_MaJ($d_code, false);
+					}
+					return $tab_retour[0];
+				}
+				
+				// en cas d'erreur on log l'erreur et on met le module à zero
+				else {
+					log::add('JeePlcBus', 'debug', 'Attention retour d\'état défaillant pour le module ' . $d_code);
+					log::add('JeePlcBus', 'debug', 'désactiver le mode retour d\'état ou vérifier le câblage.');
+					foreach (eqLogic::getCmd() as $info) {
+						$info->setValue(0);
+						$info->save();
+						$info->event(0);
+					}
+					return $tab_retour[0];
+				}
+			}
+		}
+		
+		else {
+			// si pas de retour d'état on simule l'état en fonction de la commande initiale
+			foreach (eqLogic::getCmd() as $info) {
+				$info->setValue($data1);
+				$info->save();
+				$info->event($data1);
+			}
+			$retour_sim = $d_code . ',' . $d_cmd . ',' . $data1 . ',' . $data2;
+			log::add('JeePlcBus', 'debug', 'Retour état simulé : ' . $retour_sim);
+			return $retour_sim;			
+		}
 	}
 	
- 	public function Requete_MaJ($d_code) {
-		$requete_Info = self::ActionCommande($d_code, 'STATUS_REQUEST', NULL, NULL, true);	
+ 	public function Requete_MaJ($d_code, $test_com) {
+		$requete_Info = self::ActionCommande($d_code, 'STATUS_REQUEST', NULL, NULL, true, $test_com);	
 		return $requete_Info;
 	}
 
@@ -202,7 +249,7 @@ class JeePlcBus extends eqLogic {
 			$list_cmd = $listCmdJeePlcBus_DIM;
 		} else {
 			global $listCmdJeePlcBus_NODIM;
-			$list_cmd = $listCmdJeePlcBus_NODIM;			
+			$list_cmd = $listCmdJeePlcBus_NODIM;
 		}
 		
         foreach ($list_cmd as $cmd) {
@@ -214,7 +261,6 @@ class JeePlcBus extends eqLogic {
 					$JeePlcBusCmd->setName(__($cmd['name'], __FILE__));
 					$JeePlcBusCmd->setEqLogic_id($this->id);
 					$JeePlcBusCmd->setConfiguration('tmps_dim', $cmd['configuration']['tmps_dim']);
-					$JeePlcBusCmd->setConfiguration('updateCmdToValue', $cmd['configuration']['updateCmdToValue']);
 					$JeePlcBusCmd->setType($cmd['type']);
 					$JeePlcBusCmd->setSubType($cmd['subType']);
 					$JeePlcBusCmd->setOrder($cmd['order']);
@@ -260,37 +306,37 @@ class JeePlcBusCmd extends cmd {
 /* 			case 'DIM':
 				$dim = $_options['slider'];
 				log::add('JeePlcBus', 'debug', 'Action DIMMER détectée sur ' . $device_code . ' a ' . $dim . ' en ' . $tmps_dim);
-				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', $dim, $tmps_dim, $retour_etat);
+				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', $dim, $tmps_dim, $retour_etat, false);
 				break; */
 				
 			case 'On':
 				log::add('JeePlcBus', 'debug', 'Action ON détectée sur ' . $device_code);
-				$eqLogic->ActionCommande($device_code, 'ON', '100', '0', $retour_etat);
+				$eqLogic->ActionCommande($device_code, 'ON', '100', '0', $retour_etat, false);
 				break;
 				
 			case 'Off':
 				log::add('JeePlcBus', 'debug', 'Action OFF détectée sur ' . $device_code);
-				$eqLogic->ActionCommande($device_code, 'OFF', '0', '0', $retour_etat);
+				$eqLogic->ActionCommande($device_code, 'OFF', '0', '0', $retour_etat, false);
 				break;
 				
 			case '25':
 				log::add('JeePlcBus', 'debug', 'Action 25% détectée sur ' . $device_code. ' en ' . $tmps_dim);
-				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', '25', $tmps_dim, $retour_etat);
+				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', '25', $tmps_dim, $retour_etat, false);
 				break;	
 
 			case '50':
 				log::add('JeePlcBus', 'debug', 'Action 50% détectée sur ' . $device_code. ' en ' . $tmps_dim);
-				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', '50', $tmps_dim, $retour_etat);
+				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', '50', $tmps_dim, $retour_etat, false);
 				break;	
 
 			case '75':
 				log::add('JeePlcBus', 'debug', 'Action 75% détectée sur ' . $device_code . ' en ' . $tmps_dim);
-				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', '75', $tmps_dim, $retour_etat);
+				$eqLogic->ActionCommande($device_code, 'PRESET_DIM', '75', $tmps_dim, $retour_etat, false);
 				break;	
 				
 			case 'Refresh':
 				log::add('JeePlcBus', 'debug', 'Refresh détectée sur ' . $device_code);
-				$eqLogic->Requete_MaJ($device_code);
+				$eqLogic->Requete_MaJ($device_code , false);
 				break;						
 		}
 		
