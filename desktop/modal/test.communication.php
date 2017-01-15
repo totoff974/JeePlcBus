@@ -30,6 +30,8 @@ include_file('core', 'JeePlcBus', 'config', 'JeePlcBus');
         <tr>
             <th>{{Adresse du Module}}</th>
             <th>{{Retour de la requête}}</th>
+			<th>{{Force du Signal}}</th>
+			<th>{{Intensité du Bruit}}</th>
             <th>{{Etat}}</th>
         </tr>
     </thead>
@@ -39,19 +41,34 @@ include_file('core', 'JeePlcBus', 'config', 'JeePlcBus');
 		for ($i=1; $i<17; $i++) {
 			$d_code = $code_maison.$i;
 			$d_retour = JeePlcBus::Requete_MaJ($d_code, true);
-			
+			$fin = '</span></td>';
 			$tr = '<tr>';
-			$tr .= '<td>'.$d_code.'</td>';
-			$tr .= '<td>'.$d_retour.'</td>';
 			
 			if ($d_retour != 'ERREUR pas de reponse') {
-				$tr .= '<td><span class="btn btn-xs btn-success">OK</span></td>';
+				$deb = '<td><span style="width:100%;" class="btn btn-xs btn-success">';
+				$force_du_signal = JeePlcBus::force_du_signal($d_code, true);
+				$intensite_du_bruit = JeePlcBus::intensite_du_bruit($d_code, true);
+				$etat = 'OK';
+				
+				$tr .= $deb . $d_code . $fin;
+				$tr .= $deb . $d_retour . $fin;
+				$tr .= $deb . $force_du_signal . $fin;
+				$tr .= $deb . $intensite_du_bruit . $fin;
+				$tr .= $deb . $etat . $fin;				
 			}
 			else {
-				$tr .= '<td><span class="btn btn-xs btn-danger">NOK</span></td>';
+				$deb = '<td><span style="width:100%;" class="btn btn-xs btn-danger">';
+				$etat = 'NOK';
+				
+				$tr .= $deb . $d_code . $fin;
+				$tr .= $deb . $d_retour . $fin;
+				$tr .= '<td></td>';
+				$tr .= '<td></td>';
+				$tr .= $deb . $etat . $fin;
 			}
 			
 			echo $tr;
+			
 		}
 	?>	
     </tbody>

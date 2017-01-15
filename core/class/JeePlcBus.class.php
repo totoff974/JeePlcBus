@@ -243,6 +243,17 @@ class JeePlcBus extends eqLogic {
 		return $requete_Info;
 	}
 
+	public function force_du_signal($d_code, $test_com) {
+		$requete_force = self::ActionCommande($d_code, 'GET_SIGNAL_STRENGTH', NULL, NULL, true, $test_com);
+		$force_signal = explode(",", $requete_force);
+		return $force_signal[2];
+	}
+	
+	public function intensite_du_bruit($d_code, $test_com) {
+		$requete_bruit = self::ActionCommande($d_code, 'GET_NOISE_STRENGTH', NULL, NULL, true, $test_com);
+		$intensite_signal = explode(",", $requete_bruit);
+		return $intensite_signal[2];
+	}
     public function autoAjoutCommande($device_code, $dimmable) {
 		if ($dimmable == 1) {
 			global $listCmdJeePlcBus_DIM;
