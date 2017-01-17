@@ -111,8 +111,8 @@ foreach ($eqLogics as $eqLogic) {
 				<div class="form-group">
 					<label class="col-sm-2 control-label" ></label>
 					<div class="col-sm-9">
-						<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Activer}}" data-l1key="isEnable" checked />
-						<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Visible}}" data-l1key="isVisible" checked />
+						<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+						<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
 					</div>
 				</div>
 				<div class="alert alert-info">
@@ -125,11 +125,11 @@ foreach ($eqLogics as $eqLogic) {
 					</div>
 					<?php if($nouveau){ ?>
 							<div class="col-sm-2">
-							<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{DIMMABLE}}" data-l1key="configuration" data-l2key="dimmable"/>
+							<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="dimmable" checked/>{{DIMMABLE}}</label>
 							</div>
 					<?php } ?>
   					<div class="col-sm-2">
-						<input type="checkbox" class="eqLogicAttr bootstrapSwitch" data-label-text="{{Retour d'état}}" data-l1key="configuration" data-l2key="retour_etat"/>
+						<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="retour_etat" checked/>{{Retour d'état}}</label>
 					</div>
 				</div>
 
