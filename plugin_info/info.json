@@ -1,0 +1,11 @@
+{
+	"id" : "JeePlcBus",
+	"name" : "JeePlcBus",
+	"description" : "Plugin pour la gestion du protocole PlcBus",
+	"licence" : "AGPL",
+	"author" : "Christophe CHAMANT",
+	"require" : "2.3",
+	"category" : "automation protocol",
+	"hasDependency" : false,
+	"hasOwnDeamon" : false
+}
