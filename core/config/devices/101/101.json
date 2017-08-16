@@ -1,0 +1,67 @@
+{
+    "101": {
+        "name": "Dimmable",
+        "actuator" : "1",
+        "subtype": {
+            "01": {
+                "name": "Micro Module",
+                "commands": [
+                    {
+                        "name": "ON",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_ON"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ON::64::0",
+                        "configuration" : {
+                            "updateCmdId": "Etat",
+                            "updateCmdToValue": "1"
+                        }
+                    },
+                    {
+                        "name": "OFF",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_OFF"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::OFF::0::0",
+                        "configuration" : {
+                            "updateCmdId": "Etat",
+                            "updateCmdToValue": "0"
+                        }
+                    },
+                    {
+                        "name": "Variateur",
+                        "type": "action",
+                        "subtype": "slider",
+                        "display": {
+		                    "generic_type": "LIGHT_SLIDER"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::PRESET_DIM::#slider#::0",
+                        "configuration" : {
+                            "updateCmdId": "Etat",
+                            "updateCmdToValue": "1"
+                        }
+                    },
+                    {
+                        "name": "Etat",
+                        "type": "info",
+                        "subtype": "binary",
+                        "display": {
+		                    "generic_type": "LIGHT_STATE"
+		                },
+                        "isVisible": 1,
+                        "isHistorized": 0,
+                        "unite": "",
+                        "eventOnly": 1
+                    }
+                ]
+            }
+        }
+    }
+}
