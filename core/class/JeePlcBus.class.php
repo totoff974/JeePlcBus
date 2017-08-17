@@ -229,22 +229,31 @@ class JeePlcBus extends eqLogic {
 	public function preRemove() {
 		$this->disallowDevice();
 	}
-
-	public function preInsert() {
+	
+    public function preUpdate() {
+		$home = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P");
+		$unit = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16");
+		$HU = $this->getLogicalId();
+		
 		if ($this->getLogicalId() == '') {
-			for ($i = 0; $i < 20; $i++) {
-				$logicalId = 'A1';
-				$result = eqLogic::byLogicalId($logicalId, 'JeePlcBus');
-				if (!is_object($result)) {
-					$this->setLogicalId($logicalId);
-					break;
-				}
-			}
+            throw new Exception(__('Merci de renseigner l\'ID.',__FILE__));	
+        }
+		elseif (in_array(strtoupper($HU[0]), $home) != True) {
+			throw new Exception(__('ID invalide - Renseigner une lettre comprise entre A et P',__FILE__));	
+		}
+		elseif (in_array(strtoupper(substr($HU, 1)), $unit) != True) {
+			throw new Exception(__('ID invalide - Renseigner un nombre compris entre 1 et 16',__FILE__));	
+		}
+		else {
 			$this->allowDevice();
 		}
+    }
+	
+	public function preInsert() {
+
 	}
 
-	public function postSave() {
+	public function postSave() {		
 		if ($this->getConfiguration('applyDevice') != $this->getConfiguration('device')) {
 			$this->applyModuleConfiguration();
 		} else {
@@ -279,7 +288,6 @@ class JeePlcBus extends eqLogic {
 		foreach (self::byType('JeePlcBus') as $info) {
 			
 			if ($info->getlogicalId() == $logicalId) {
-				log::add('JeePlcBus', 'debug', '***** MAJ *****');
 				foreach ($info->getCmd() as $info) {
 					$info->setValue($etat);
 					$info->save();
@@ -348,36 +356,37 @@ class JeePlcBusCmd extends cmd {
 				}
 			}
 		}
+
 		if ($value == '') {
 			$logicalId = ($this->getConfiguration('id') != '') ? $this->getConfiguration('id') : $eqLogic->getLogicalId();
 			$value = $this->getLogicalId();
-			if (preg_match("/.*chacon\(([0-9]*),([0-9]*)\).*/i", $value, $matches)) {
-				$value = "0B11002F#ID##BTN##VALUE#0F70";
-				$value = trim(str_replace("#BTN#", $matches[1], $value));
-				$value = trim(str_replace("#VALUE#", $matches[2], $value));
-			}
-			$value = trim(str_replace("#ID#", $logicalId, $value));
-			$value = trim(str_replace("#GROUP#", $this->getConfiguration('group'), $value));
-			if (strpos($value, '#SeqNbr#') !== false) {
-				$seqNbr = $this->getCache('SeqNbr', 17);
-				if ($seqNbr > 255) {
-					$seqNbr = 16;
-				}
-				$this->setCache('SeqNbr', $seqNbr + 1);
-				$value = trim(str_replace("#seqNbr#", dechex($seqNbr), $value));
-			}
+			$value = explode('::', $value);
+			
+			$value[0] = trim(str_replace("#ID#", $logicalId, $value[0]));
+		
 		}
 		switch ($this->getSubType()) {
+			case 'other':
+				if ($value[2]>=0 and $value[2]<=100) {
+					$value[2] = strtoupper(dechex(intval($value[2])));
+				}
+				break;
 			case 'slider':
-				$value = str_replace('#slider#', strtoupper(dechex(intval($_options['slider']))), $value);
+				$value[2] = str_replace('#slider#', strtoupper(dechex(intval($_options['slider']))), $value[2]);
 				break;
 			case 'color':
-				$value = str_replace('#color#', $_options['color'], $value);
+				$value[2] = str_replace('#color#', $_options['color'], $value[2]);
 				break;
 			case 'message':
-				$value = str_replace('#message#', $_options['message'], $value);
+				$value[2] = str_replace('#message#', $_options['message'], $value[2]);
 				break;
 		}
+		
+		if ($value[3]>=0 and $value[3]<=100) {
+			$value[3] = strtoupper(dechex(intval($value[3])));
+		}
+		
+		$value = implode('::', $value);
 		$values = explode('&&', $value);
 		$message = trim(json_encode(array('apikey' => jeedom::getApiKey('JeePlcBus'), 'cmd' => 'send', 'data' => $values)));
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0);

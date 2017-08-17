@@ -14,7 +14,7 @@
 		                    "generic_type": "LIGHT_ON"
 		                },
                         "isVisible": 1,
-                        "logicalId": "#ID#::ON::64::0",
+                        "logicalId": "#ID#::ON::100::0",
                         "configuration" : {
                             "updateCmdId": "Etat",
                             "updateCmdToValue": "1"
