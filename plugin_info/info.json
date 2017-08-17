@@ -6,6 +6,6 @@
 	"author" : "Christophe CHAMANT",
 	"require" : "3.0",
 	"category" : "automation protocol",
-	"hasDependency" : true,
-	"hasOwnDeamon" : true
+	"hasOwnDeamon" : true,
+	"hasDependency" : true
 }

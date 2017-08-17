@@ -103,7 +103,7 @@ foreach ($eqLogics as $eqLogic) {
               <div class="col-sm-4">
                 <input type="text" class="eqLogicAttr form-control" data-l1key="logicalId" placeholder="Par exemple A1"/>
               </div>
-            </div>
+            </div>		
             <div class="form-group">
               <label class="col-sm-3 control-label"></label>
               <div class="col-sm-9">
