@@ -1,0 +1,11 @@
+= PLCBUS
+
+Plugin permettant d'utiliser le protocole PLCBUS avec Jeedom.
+
+include::configuration.asciidoc[]
+
+include::faq.asciidoc[]
+
+'''
+
+include::changelog.asciidoc[]
