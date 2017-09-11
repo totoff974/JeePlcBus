@@ -135,7 +135,8 @@ def send_plcbus(message):
 	jeedom_serial.flushInput()
 	logging.debug("Write message to serial port")
 	logging.debug("WRITE : " + message)
-	jeedom_serial.write(message.decode('hex') )
+	jeedom_serial.write(message.decode('hex'))
+	time.sleep(3)
 	logging.debug("Write message ok : "+ jeedom_utils.ByteToHex(message.decode('hex')))
 	try:
 		logging.debug("Decode message")
