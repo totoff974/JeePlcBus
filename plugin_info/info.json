@@ -7,5 +7,8 @@
 	"require" : "3.0",
 	"category" : "automation protocol",
 	"hasOwnDeamon" : true,
-	"hasDependency" : true
+	"hasDependency" : true,
+	"maxDependancyInstallTime" : 120,
+	"changelog" : "https://github.com/totoff974/JeePlcBus/blob/stable/doc/#language#/changelog.asciidoc",
+	"documentation" : "https://github.com/totoff974/JeePlcBus/blob/stable/doc/#language#/index.asciidoc"
 }
