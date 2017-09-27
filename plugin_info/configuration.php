@@ -25,14 +25,6 @@ if (!isConnect('admin')) {
     <fieldset>
             <legend><i class="icon loisir-darth"></i> {{Aide au développement}}</legend>
 			<span><i>Ce plugin est gratuit, le don est laissé au libre choix de chacun en fonction de sa satisfaction pour m'aider au développement. Merci.</i></span>
-			<div class="form-group" align="center">	
-                <div align="center">
-					<a class="btn" id="bt_paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7BBF45ZDD9Y8L" target="_new" >
-					<img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donateCC_LG.gif" border="0" alt="{{Faire un don via Paypal au développeur}}">
-					<img alt="" border="0" src="https://www.paypalobjects.com/fr_XC/i/scr/pixel.gif" width="1" height="1">
-					</a>
-               </div>
-           </div>		
     </fieldset>
 </form>
 <form class="form-horizontal">
