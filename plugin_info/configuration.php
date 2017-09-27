@@ -27,6 +27,7 @@ if (!isConnect('admin')) {
 			<span><i>Ce plugin est gratuit, le don est laissé au libre choix de chacun en fonction de sa satisfaction pour m'aider au développement. Merci.</i></span>
     </fieldset>
 </form>
+</br>
 <form class="form-horizontal">
     <fieldset>
     <legend><i class="icon loisir-darth"></i> {{Démon}}</legend>
