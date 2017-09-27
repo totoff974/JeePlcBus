@@ -15,6 +15,7 @@
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::ON::100::0",
+						"value": "Etat",
                         "configuration" : {
                             "updateCmdId": "Etat",
                             "updateCmdToValue": "1"
@@ -29,6 +30,7 @@
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::OFF::0::0",
+						"value": "Etat",
                         "configuration" : {
                             "updateCmdId": "Etat",
                             "updateCmdToValue": "0"
