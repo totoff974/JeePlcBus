@@ -1,1 +1,2 @@
+- 27/09/2017 11:18 → Création d’un point 0 mise en conformité du plugin
 - Refonte totale
