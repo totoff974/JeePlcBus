@@ -289,7 +289,6 @@ class JeePlcBus extends eqLogic {
 			
 			if ($info->getlogicalId() == $logicalId) {
 				foreach ($info->getCmd() as $info) {
-					$info->setValue($etat);
 					$info->save();
 					$info->event($etat);
 				}				
