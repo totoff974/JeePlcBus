@@ -43,7 +43,7 @@ function JeePlcBus_update() {
 		}
 		foreach ($device['commands'] as $command) {
 			if (!isset($command['logicalId'])) {
-				continue;
+				// continue;
 			}
 			$cmd = $eqLogic->getCmd(null, $command['logicalId']);
 			if (is_object($cmd) && $cmd->getDisplay('generic_type') == '' && isset($command['display']['generic_type'])) {
