@@ -1,0 +1,115 @@
+{
+    "10": {
+        "name": "[PLCBUS] Fonctions Spéciales",
+        "actuator" : "0",
+        "subtype": {
+            "01": {
+                "name": "PLCBUS",
+                "commands": [
+                    {
+                        "name": "ALL LIGHTS ON",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_ON",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ALL_LIGHTS_ON::100::0",
+						"order": 0
+                    },
+                    {
+                        "name": "ALL LIGHTS OFF",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_OFF",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ALL_LIGHTS_OFF::0::0",
+						"order": 1
+                    },
+                    {
+                        "name": "ALL USER LIGHTS ON",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_ON",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ALL_USER_LIGHTS_ON::100::0",
+						"order": 2
+                    },
+                    {
+                        "name": "ALL USER LIGHTS OFF",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_OFF",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ALL_USER_LIGHTS_OFF::0::0",
+						"order": 3
+                    },
+                    {
+                        "name": "ALL UNITS OFF",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_OFF",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ALL_UNITS_OFF::0::0",
+						"order": 4
+                    },
+                    {
+                        "name": "ALL USER UNITS OFF",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_OFF",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ALL_USER_UNITS_OFF::0::0",
+						"order": 5
+                    }
+                ]
+            }
+        }
+    }
+}

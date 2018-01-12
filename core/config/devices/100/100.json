@@ -1,17 +1,38 @@
 {
     "100": {
-        "name": "ON/OFF",
+        "name": "[PLCBUS] ON/OFF",
         "actuator" : "1",
         "subtype": {
             "01": {
                 "name": "Micro Module",
                 "commands": [
                     {
+                        "name": "Etat",
+                        "type": "info",
+                        "subtype": "binary",
+                        "display": {
+		                    "generic_type": "LIGHT_STATE",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "isVisible": 0,
+                        "isHistorized": 0,
+                        "unite": "",
+                        "eventOnly": 1,
+						"order": 0
+                    },
+                    {
                         "name": "ON",
                         "type": "action",
                         "subtype": "other",
                         "display": {
-		                    "generic_type": "LIGHT_ON"
+		                    "generic_type": "LIGHT_ON",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "0"
+		                },
+                        "template": {
+		                    "dashboard": "light",
+							"mobile": "light"
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::ON::100::0",
@@ -19,14 +40,21 @@
                         "configuration" : {
                             "updateCmdId": "Etat",
                             "updateCmdToValue": "1"
-                        }
+                        },
+						"order": 1
                     },
                     {
                         "name": "OFF",
                         "type": "action",
                         "subtype": "other",
                         "display": {
-		                    "generic_type": "LIGHT_OFF"
+		                    "generic_type": "LIGHT_OFF",
+							"forceReturnLineBefore": "0",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "light",
+							"mobile": "light"
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::OFF::0::0",
@@ -34,19 +62,101 @@
                         "configuration" : {
                             "updateCmdId": "Etat",
                             "updateCmdToValue": "0"
-                        }
+                        },
+						"order": 2
                     },
                     {
-                        "name": "Etat",
-                        "type": "info",
-                        "subtype": "binary",
+                        "name": "MaJ Statut",
+                        "type": "action",
+                        "subtype": "other",
                         "display": {
-		                    "generic_type": "LIGHT_STATE"
+		                    "generic_type": "GENERIC_ACTION",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
 		                },
                         "isVisible": 1,
+                        "logicalId": "#ID#::STATUS_REQUEST::0::0",
+						"order": 3
+                    },
+                    {
+                        "name": "GET SIGNAL STRENGTH",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "GENERIC_ACTION",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "0"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 0,
+                        "logicalId": "#ID#::GET_SIGNAL_STRENGTH::0::0",
+						"value": "SIGNAL STRENGTH",
+                        "configuration" : {
+                            "updateCmdId": "SIGNAL STRENGTH"
+                        },
+						"order": 4
+                    },
+                    {
+                        "name": "SIGNAL STRENGTH",
+                        "type": "info",
+                        "subtype": "numeric",
+                        "display": {
+		                    "generic_type": "GENERIC_INFO",
+							"forceReturnLineBefore": "0",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "tile",
+							"mobile": "tile"
+		                },
+                        "isVisible": 0,
                         "isHistorized": 0,
                         "unite": "",
-                        "eventOnly": 1
+                        "eventOnly": 1,
+						"order": 5
+                    },
+                    {
+                        "name": "GET NOISE STRENGTH",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "GENERIC_ACTION",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "0"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 0,
+                        "logicalId": "#ID#::GET_NOISE_STRENGTH::0::0",
+						"value": "NOISE STRENGTH",
+                        "configuration" : {
+                            "updateCmdId": "NOISE STRENGTH"
+                        },
+						"order": 6
+                    },
+                    {
+                        "name": "NOISE STRENGTH",
+                        "type": "info",
+                        "subtype": "numeric",
+                        "display": {
+		                    "generic_type": "GENERIC_INFO",
+							"forceReturnLineBefore": "0",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "tile",
+							"mobile": "tile"
+		                },
+                        "isVisible": 0,
+                        "isHistorized": 0,
+                        "unite": "",
+                        "eventOnly": 1,
+						"order": 7
                     }
                 ]
             }

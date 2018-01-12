@@ -38,6 +38,11 @@ try {
 		}
 		ajax::success($JeePlcBus->getModelList(init('conf')));
 	}
+	
+	if (init('action') == 'getSignals_cmd') {
+		JeePlcBus::getSignals_cmd(init('Id'), init('SignNois'));
+		ajax::success();
+	}	
 
 	throw new Exception('Aucune méthode correspondante');
 	/*     * *********Catch exeption*************** */

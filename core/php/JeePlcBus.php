@@ -40,15 +40,43 @@ if (isset($result['devices'])) {
 				continue;
 			}
 		}
-		
+
 		log::add('JeePlcBus', 'debug', '******* Socket Informations DEB *******');
 		log::add('JeePlcBus', 'debug', $datas['id']. '::' . $datas['command']. '::' . $datas['data1']. '::' . $datas['data2']);
 		
 		$logicalId = $datas['id'];
 		$JeePlcBus = JeePlcBus::byLogicalId($datas['id'], 'JeePlcBus');
-		$etat = (in_array($datas['command'], array('OFF'))) ? 0 : 1;
-		$JeePlcBus = JeePlcBus::Maj_etat($logicalId, $etat);
-	
+
+		if ($datas['command'] == "OFF" or $datas['command'] == "STATUS_OFF" or $datas['command'] == "ON" or $datas['command'] == "STATUS_ON" or $datas['command'] == "DIM" or $datas['command'] == "BRIGHT" or $datas['command'] == "PRESET_DIM") {
+				$etat = $datas['data1'];
+				$type_maj_etat = 1;
+		}
+		
+		elseif ($datas['command'] == "ALL_UNITS_OFF" or $datas['command'] == "ALL_LIGHTS_ON" or $datas['command'] == "ALL_LIGHTS_OFF" or $datas['command'] == "ALL_USER_LIGHTS_ON" or $datas['command'] == "ALL_USER_UNITS_OFF" or $datas['command'] == "ALL_USER_LIGHTS_OFF") {
+				$etat = $datas['data1'];
+				$type_maj_etat = 2;
+		}
+
+		elseif ($datas['command'] == "REPORT_SIGNAL_STRENGTH") {
+				$etat = $datas['data1'];
+				$type_maj_etat = 3;
+		}
+		
+		elseif ($datas['command'] == "REPORT_NOISE_STRENGTH") {
+				$etat = $datas['data1'];
+				$type_maj_etat = 4;
+		}	
+		
+		else {
+				$etat = -1;
+				$type_maj_etat = 0;			
+		}
+		
+		if ($etat >= 0 and $etat <= 100) {
+			$JeePlcBus = JeePlcBus::Maj_etat($logicalId, $etat, $type_maj_etat);
+			log::add('JeePlcBus', 'debug', 'MaJ logicalId => ' . $logicalId . ' --> ' . $etat);			
+		}
+
 		log::add('JeePlcBus', 'debug', '******* Socket Informations FIN ******* ');
 	}
 }

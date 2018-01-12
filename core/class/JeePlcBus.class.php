@@ -284,14 +284,54 @@ class JeePlcBus extends eqLogic {
 		socket_close($socket);
 	}
 
-	public function Maj_etat($logicalId, $etat) {
+	public function Maj_etat($logicalId, $etat, $type_maj_etat) {
+		
 		foreach (self::byType('JeePlcBus') as $info) {
 			
-			if ($info->getlogicalId() == $logicalId) {
+			if ($type_maj_etat == 1) {
+				if ($info->getlogicalId() == $logicalId) {
+					foreach ($info->getCmd() as $info) {
+						if ($info->getName() == "Etat") {
+							$info->save();
+							$info->event($etat);
+						}
+					}				
+				}
+			}
+			
+			elseif ($type_maj_etat == 2) {
 				foreach ($info->getCmd() as $info) {
-					$info->save();
-					$info->event($etat);
-				}				
+					if ($info->getName() == "Etat") {
+						$info->save();
+						$info->event($etat);
+					}
+				}
+			}
+			
+			elseif ($type_maj_etat == 3) {
+				if ($info->getlogicalId() == $logicalId) {
+					foreach ($info->getCmd() as $info) {
+						if ($info->getName() == "SIGNAL STRENGTH") {
+							$info->save();
+							$info->event($etat);
+						}
+					}				
+				}
+			}
+			
+			elseif ($type_maj_etat == 4) {
+				if ($info->getlogicalId() == $logicalId) {
+					foreach ($info->getCmd() as $info) {
+						if ($info->getName() == "NOISE STRENGTH") {
+							$info->save();
+							$info->event($etat);
+						}
+					}				
+				}
+			}
+			
+			else {
+				
 			}
 			
 		}
@@ -324,6 +364,28 @@ class JeePlcBus extends eqLogic {
 		$this->import($device);
 	}
 
+	public function getSignals($logicalId, $param) {
+		foreach (self::byType('JeePlcBus') as $info) {
+				if ($info->getlogicalId() === $logicalId) {
+					foreach ($info->getCmd('info') as $info_cmd) {
+						if ($info_cmd->getName() === $param) {
+							$signal = $info_cmd->execCmd();
+						}
+					}				
+				}
+		}
+		return $signal;
+	}
+	
+	public function getSignals_cmd($Id, $SignNois) {	
+		$SignalNoise = "GET " . strtoupper($SignNois) . " STRENGTH";
+		foreach (self::byId($Id)->getCmd('action') as $cmd) {
+			if ($cmd->getName() == $SignalNoise){
+				$cmd->execCmd();
+			}
+		}
+		return;
+	}
 /*     * **********************Getteur Setteur*************************** */
 }
 
@@ -367,11 +429,11 @@ class JeePlcBusCmd extends cmd {
 		switch ($this->getSubType()) {
 			case 'other':
 				if ($value[2]>=0 and $value[2]<=100) {
-					$value[2] = strtoupper(dechex(intval($value[2])));
+					$value[2] = strtoupper(intval($value[2]));
 				}
 				break;
 			case 'slider':
-				$value[2] = str_replace('#slider#', strtoupper(dechex(intval($_options['slider']))), $value[2]);
+				$value[2] = str_replace('#slider#', strtoupper(intval($_options['slider'])), $value[2]);
 				break;
 			case 'color':
 				$value[2] = str_replace('#color#', $_options['color'], $value[2]);
@@ -382,12 +444,16 @@ class JeePlcBusCmd extends cmd {
 		}
 		
 		if ($value[3]>=0 and $value[3]<=100) {
-			$value[3] = strtoupper(dechex(intval($value[3])));
+			$value[3] = strtoupper(intval($value[3]));
 		}
 		
 		$value = implode('::', $value);
 		$values = explode('&&', $value);
-		$message = trim(json_encode(array('apikey' => jeedom::getApiKey('JeePlcBus'), 'cmd' => 'send', 'data' => $values)));
+		$ack = $eqLogic->getConfiguration('ack');
+		if (!isset($ack)) {
+			$ack = 1;
+		}
+		$message = trim(json_encode(array('apikey' => jeedom::getApiKey('JeePlcBus'), 'cmd' => 'send', 'data' => $values, 'ack' => $ack)));
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
 		socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'JeePlcBus'));
 		socket_write($socket, trim($message), strlen(trim($message)));

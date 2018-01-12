@@ -1,0 +1,72 @@
+{
+    "201": {
+        "name": "[X10] ON/OFF",
+        "actuator" : "1",
+        "subtype": {
+            "01": {
+                "name": "RAIL DIN",
+                "commands": [
+                    {
+                        "name": "Etat",
+                        "type": "info",
+                        "subtype": "binary",
+                        "display": {
+		                    "generic_type": "LIGHT_STATE",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "1"
+		                },
+                        "isVisible": 0,
+                        "isHistorized": 0,
+                        "unite": "",
+                        "eventOnly": 1,
+						"order": 0
+                    },
+                    {
+                        "name": "ON",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_ON",
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "0"
+		                },
+                        "template": {
+		                    "dashboard": "light",
+							"mobile": "light"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::ON::100::0",
+						"value": "Etat",
+                        "configuration" : {
+                            "updateCmdId": "Etat",
+                            "updateCmdToValue": "1"
+                        },
+						"order": 1
+                    },
+                    {
+                        "name": "OFF",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "LIGHT_OFF",
+							"forceReturnLineBefore": "0",
+							"forceReturnLineAfter": "1"
+		                },
+                        "template": {
+		                    "dashboard": "light",
+							"mobile": "light"
+		                },
+                        "isVisible": 1,
+                        "logicalId": "#ID#::OFF::0::0",
+						"value": "Etat",
+                        "configuration" : {
+                            "updateCmdId": "Etat",
+                            "updateCmdToValue": "0"
+                        },
+						"order": 2
+                    }
+                ]
+            }
+        }
+    }
+}
