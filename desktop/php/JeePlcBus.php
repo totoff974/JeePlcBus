@@ -25,7 +25,6 @@ foreach ($eqLogics as $eqLogic) {
      </ul>
    </div>
  </div>
-
  <div class="col-lg-10 col-md-9 col-sm-8 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
    <legend><i class="fa fa-cog"></i>  {{Gestion}}</legend>
    <div class="eqLogicThumbnailContainer">
@@ -136,7 +135,12 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
 ?>
            </div>
          </div>
-
+		 <div class="form-group">
+		   <label class="col-sm-3 control-label">{{ACK (accuser réception de la commande)}}</label>
+		   <div class="col-sm-9">
+		 	<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ack" checked/>{{Activer}}</label>
+		   </div>
+		</div>
       </fieldset>
     </form>
   </div>
@@ -150,19 +154,19 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
               <option value="">Aucun</option>
               <?php
 $actuators = array();
-$sensors = array();
+$fctspeciales = array();
 
 foreach (JeePlcBus::devicesParameters() as $packettype => $info) {
 	if (isset($info['actuator']) && $info['actuator'] == 1) {
 		$actuators[$packettype] = $info;
 	} else {
-		$sensors[$packettype] = $info;
+		$fctspeciales[$packettype] = $info;
 	}
 }
-uasort($sensors, 'sortByOption');
+uasort($fctspeciales, 'sortByOption');
 uasort($actuators, 'sortByOption');
-echo '<optgroup label="{{Actionneur}}">';
-foreach ($actuators as $packettype => $info) {
+echo '<optgroup label="{{Fonctions Spéciales}}">';
+foreach ($fctspeciales as $packettype => $info) {
 	$instruction = '';
 	if (isset($info['instruction'])) {
 		$instruction = $info['instruction'];
@@ -172,8 +176,8 @@ foreach ($actuators as $packettype => $info) {
 	}
 }
 echo '</optgroup>';
-echo '<optgroup label="{{Capteur}}">';
-foreach ($sensors as $packettype => $info) {
+echo '<optgroup label="{{Actionneur}}">';
+foreach ($actuators as $packettype => $info) {
 	$instruction = '';
 	if (isset($info['instruction'])) {
 		$instruction = $info['instruction'];
