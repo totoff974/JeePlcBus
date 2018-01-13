@@ -1,0 +1,3 @@
+Le plugin PLCBUS permet de dialoguer avec l'ensemble des périphériques compatibles avec le protocole PLCBUS. 
+
+== Configuration du plugin
