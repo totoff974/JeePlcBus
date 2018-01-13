@@ -1,60 +1,85 @@
 {
-    "104": {
-        "name": "[PLCBUS] ON/OFF",
+    "105": {
+        "name": "[PLCBUS] Volet Roulant",
         "actuator" : "1",
         "subtype": {
             "01": {
-                "name": "Prise de Courant",
+                "name": "Micro Module",
                 "commands": [
                     {
                         "name": "Etat",
                         "type": "info",
-                        "subtype": "binary",
+                        "subtype": "numeric",
                         "display": {
-		                    "generic_type": "LIGHT_STATE",
+		                    "generic_type": "FLAP_STATE",
 							"forceReturnLineBefore": "1",
 							"forceReturnLineAfter": "1"
 		                },
-                        "isVisible": 0,
+                        "template": {
+		                    "dashboard": "store",
+							"mobile": "store"
+		                },
+                        "isVisible": 1,
                         "isHistorized": 0,
-                        "unite": "",
+                        "unite": "%",
                         "eventOnly": 1,
 						"order": 0
                     },
                     {
-                        "name": "ON",
+                        "name": "Monter",
                         "type": "action",
                         "subtype": "other",
                         "display": {
-		                    "generic_type": "LIGHT_ON",
+		                    "generic_type": "FLAP_UP",
 							"forceReturnLineBefore": "1",
 							"forceReturnLineAfter": "0"
 		                },
                         "template": {
-		                    "dashboard": "light",
-							"mobile": "light"
+		                    "dashboard": "default",
+							"mobile": "default"
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::ON::100::0",
 						"value": "Etat",
                         "configuration" : {
                             "updateCmdId": "Etat",
-                            "updateCmdToValue": "1"
+                            "updateCmdToValue": "100"
                         },
 						"order": 1
                     },
                     {
-                        "name": "OFF",
+                        "name": "Stop",
                         "type": "action",
                         "subtype": "other",
                         "display": {
-		                    "generic_type": "LIGHT_OFF",
+		                    "generic_type": "FLAP_STOP",
+							"forceReturnLineBefore": "0",
+							"forceReturnLineAfter": "0"
+		                },
+                        "template": {
+		                    "dashboard": "default",
+							"mobile": "default"
+		                },
+                        "isVisible": 1,
+						"value": "Etat",
+                        "logicalId": "#ID#::FADE_STOP::0::0",
+                        "configuration" : {
+                            "updateCmdId": "Etat"
+                        },
+						"order": 2
+                    },
+                    {
+                        "name": "Descendre",
+                        "type": "action",
+                        "subtype": "other",
+                        "display": {
+		                    "generic_type": "FLAP_DOWN",
 							"forceReturnLineBefore": "0",
 							"forceReturnLineAfter": "1"
 		                },
                         "template": {
-		                    "dashboard": "light",
-							"mobile": "light"
+		                    "dashboard": "default",
+							"mobile": "default"
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::OFF::0::0",
@@ -63,7 +88,7 @@
                             "updateCmdId": "Etat",
                             "updateCmdToValue": "0"
                         },
-						"order": 2
+						"order": 3
                     },
                     {
                         "name": "MaJ Statut",
@@ -76,8 +101,8 @@
 		                },
                         "isVisible": 1,
                         "logicalId": "#ID#::STATUS_REQUEST::0::0",
-						"order": 3
-                    }
+						"order": 4
+                    },
                     {
                         "name": "GET SIGNAL STRENGTH",
                         "type": "action",
@@ -97,7 +122,7 @@
                         "configuration" : {
                             "updateCmdId": "SIGNAL STRENGTH"
                         },
-						"order": 4
+						"order": 5
                     },
                     {
                         "name": "SIGNAL STRENGTH",
@@ -116,7 +141,7 @@
                         "isHistorized": 0,
                         "unite": "",
                         "eventOnly": 1,
-						"order": 5
+						"order": 6
                     },
                     {
                         "name": "GET NOISE STRENGTH",
@@ -124,8 +149,8 @@
                         "subtype": "other",
                         "display": {
 		                    "generic_type": "GENERIC_ACTION",
-							"forceReturnLineBefore": "0",
-							"forceReturnLineAfter": "1"
+							"forceReturnLineBefore": "1",
+							"forceReturnLineAfter": "0"
 		                },
                         "template": {
 		                    "dashboard": "default",
@@ -137,7 +162,7 @@
                         "configuration" : {
                             "updateCmdId": "NOISE STRENGTH"
                         },
-						"order": 6
+						"order": 7
                     },
                     {
                         "name": "NOISE STRENGTH",
@@ -156,7 +181,7 @@
                         "isHistorized": 0,
                         "unite": "",
                         "eventOnly": 1,
-						"order": 7
+						"order": 8
                     }
                 ]
             }
