@@ -69,9 +69,9 @@
             var options = '';
             for (var i in data.result) {
                 if (data.result[i]['selected'] == 1){
-                    options += '<option value="'+i+'" selected>'+data.result[i]['value']+'</option>';
+                    options += '<option style="display:none;" value="'+i+'" selected>'+data.result[i]['value']+'</option>';
                 } else {
-                    options += '<option value="'+i+'">'+data.result[i]['value']+'</option>';
+                    options += '<option style="display:none;" value="'+i+'">'+data.result[i]['value']+'</option>';
                 }
             }
             $(".modelList").show();
@@ -108,24 +108,21 @@ function addCmdToTable(_cmd) {
     tr += '<span class="cmdAttr" data-l1key="display" data-l2key="icon" style="margin-left : 10px;"></span>';
     tr += '</div>';
     tr += '<div class="col-sm-6">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="name">';
+    tr += '<input disabled class="cmdAttr form-control input-sm" data-l1key="name">';
     tr += '</div>';
     tr += '</div>';
-    tr += '<select class="cmdAttr form-control input-sm" data-l1key="value" style="display : none;margin-top : 5px;" title="La valeur de la commande vaut par défaut la commande">';
-    tr += '<option value="">Aucune</option>';
+    tr += '<select disabled class="cmdAttr form-control input-sm" data-l1key="value" style="display : none;margin-top : 5px;" title="La valeur de la commande vaut par défaut la commande">';
+    tr += '<option style="display:none;" value="">Aucune</option>';
     tr += '</select>';
     tr += '</td>';
-    tr += '<td class="expertModeVisible">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display : none;">';
-    tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
-    tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
+    tr += '<td>';
+    tr += '<input class="cmdAttr form-control input-sm" data-l1key="id" style="display:none;">';
+    tr += '<span style="display:none;" class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>';
+    tr += '<span style="display:none;" class="subType" subType="' + init(_cmd.subType) + '"></span>';
     tr += '</td>';
-    tr += '<td class="expertModeVisible"><input class="cmdAttr form-control input-sm" data-l1key="logicalId" value="0" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
-    
-    // tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="id" placeholder="{{ID}}" style="margin-top : 5px;margin-right:2px;width:24%;display:inline-block;">';
-
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateValue" placeholder="{{Valeur retour d\'état}}" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateTime" placeholder="{{Durée avant retour d\'état (min)}}" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;">';
+    tr += '<td class="expertModeVisible"><input disabled class="cmdAttr form-control input-sm" data-l1key="logicalId" value="0" style="width : 70%; display : inline-block;" placeholder="{{Commande}}"><br/>';
+    tr += '<input type="hidden" class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateValue" placeholder="{{Valeur retour d\'état}}" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;">';
+    tr += '<input type="hidden" class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="returnStateTime" placeholder="{{Durée avant retour d\'état (min)}}" style="width : 20%; display : inline-block;margin-top : 5px;margin-right : 5px;">';
     tr += '</td>';
     tr += '<td>';
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
@@ -133,13 +130,13 @@ function addCmdToTable(_cmd) {
     tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr expertModeVisible" data-l1key="display" data-l2key="invertBinary"/>{{Inverser}}</label></span> ';
     tr += '</td>';
     tr += '<td>';
-    tr += '<select class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" style="display : none;margin-top : 5px;" title="Commande d\'information à mettre à jour">';
-    tr += '<option value="">Aucune</option>';
+    tr += '<select disabled class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdId" style="display:none;margin-top:5px;" title="Commande d\'information à mettre à jour">';
+    tr += '<option style="display:none;" value="">Aucune</option>';
     tr += '</select>';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdToValue" placeholder="Valeur de l\'information" style="display : none;margin-top : 5px;">';
-    tr += '<input class="cmdAttr form-control input-sm" data-l1key="unite"  style="width : 100px;" placeholder="Unité" title="Unité">';
-    tr += '<input class="cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="minValue" placeholder="Min" title="Min"> ';
-    tr += '<input class="cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="maxValue" placeholder="Max" title="Max" style="margin-top : 5px;">';
+    tr += '<input type="hidden" class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="updateCmdToValue" placeholder="Valeur de l\'information" style="display : none;margin-top : 5px;">';
+    tr += '<input type="hidden" class="cmdAttr form-control input-sm" data-l1key="unite"  style="width : 100px;" placeholder="Unité" title="Unité">';
+    tr += '<input type="hidden" class="cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="minValue" placeholder="Min" title="Min"> ';
+    tr += '<input type="hidden" class="cmdAttr form-control input-sm expertModeVisible" data-l1key="configuration" data-l2key="maxValue" placeholder="Max" title="Max" style="margin-top : 5px;">';
     tr += '</td>';
     tr += '<td>';
     if (is_numeric(_cmd.id)) {
