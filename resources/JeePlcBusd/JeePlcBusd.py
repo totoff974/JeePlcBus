@@ -151,12 +151,11 @@ def Statut_RX_Receive(homeunit, action, trame_rx):
 			return True
 	
 	elif (statut == 13 or statut == 14 or (homeunit and homeunit != trame_int[3])):
-		logging.debug("Trafic controleur")
+		logging.debug("Trafic autre controleur")
 		logging.debug(plcbus_rx_out(trame_rx))
 		return True
 		
 	elif not homeunit:
-		logging.debug("Trafic autre controleur")
 		logging.debug(plcbus_rx_out(trame_rx))
 		return True
 		
@@ -183,10 +182,10 @@ def plcbus_rx_out(trame_rx):
 	plcbus_receive = homeunit + "::" + plcbus_cmd + "::" + data1 + "::" + data2
 	return plcbus_receive
 	
-def affiche_rx(homeunit, action, trame_rx):
+def affiche_rx(homeunit, action, trame_rx, num_ack):
 	if Valid_RX_Receive(trame_rx):
 		if Statut_RX_Receive(homeunit, action, trame_rx):
-			send_socket(plcbus_rx_out(trame_rx))
+			send_socket(plcbus_rx_out(trame_rx), num_ack)
 	
 ###########################
 ## Mise en forme des trames a envoyer
@@ -292,16 +291,17 @@ def send_plcbus(plcbus_frame, ack):
 ########################
 ## OUTPUT Message
 ########################
-def send_socket(message):
+def send_socket(message, num_ack):
 	message = message.split("::")
-
+	
 	action = {}
 	action['id'] = str(message[0]).replace('\x00', '')
 	action['command'] = str(message[1]).replace('\x00', '')
 	action['data1'] = str(message[2]).replace('\x00', '')
 	action['data2'] = str(message[3]).replace('\x00', '')
+	action['num_ack'] = str(num_ack).replace('\x00', '')
 	
-	plcbus_statut = str(action['id']+","+action['command']+","+action['data1']+","+action['data2'])
+	plcbus_statut = str(action['id']+","+action['command']+","+action['data1']+","+action['data2']+","+action['num_ack'])
 	logging.debug('Decode data : '+str(action))
 	try:
 		globals.JEEDOM_COM.add_changes('devices::'+action['id'],action)
@@ -321,7 +321,9 @@ def read_plcbus():
 				message = byte + jeedom_serial.readbytes(8)
 				message = str(message.encode('hex'))
 				logging.debug("Serial IN message brut : " + message)
-				affiche_rx(None, None, message)
+				if int(message[14]) > 1:
+					logging.debug("REPONSE ACK")
+				affiche_rx(None, None, message, int(message[14]))
 				
 	except Exception, e:
 		logging.error("Error in read_plcbus: " + str(e))
