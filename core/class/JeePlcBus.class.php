@@ -284,21 +284,74 @@ class JeePlcBus extends eqLogic {
 		socket_close($socket);
 	}
 
-	public function Maj_etat($logicalId, $etat, $type_maj_etat) {
-		
+	public function Maj_etat($logicalId, $etat, $type_maj_etat, $num_ack) {
 		foreach (self::byType('JeePlcBus') as $info) {
-			
-			if ($type_maj_etat == 1) {
-				if ($info->getlogicalId() == $logicalId) {
-					foreach ($info->getCmd() as $info) {
-						if ($info->getName() == "Etat") {
-							$info->save();
-							$info->event($etat);
+			// pour un equipement uniquement
+			if (($info->getlogicalId() == $logicalId) and (($type_maj_etat != 2) or ($type_maj_etat != 0))) {
+				switch ($type_maj_etat) {
+					// pour une commande ON/OFF/DIM/BRIGHT/PRESET_DIM
+					case 1:
+						// si equipement demande un ack
+						if (intval($info->getConfiguration('ack')) == 1) {
+							// si reponse du module ACK
+							if (intval($num_ack) > 1){
+								foreach ($info->getCmd() as $info) {
+									if ($info->getName() == "Etat") {
+										$info->save();
+										$info->event($etat);
+									}
+								}
+							}
+							// si pas de reponse du module ACK
+							else {
+								foreach ($info->getCmd() as $info) {
+									if ($info->getName() == "Etat") {
+										$info->save();
+										$info->event(0);
+									}
+								}
+							}
 						}
-					}				
+						// si equipement ne demande pas un ack
+						else {
+							foreach ($info->getCmd() as $info) {
+								if ($info->getName() == "Etat") {
+									$info->save();
+									$info->event($etat);
+								}
+							}
+						}
+						break;
+					// pour un retour REPORT_SIGNAL_STRENGTH
+					case 3:
+						foreach ($info->getCmd() as $info) {
+							if ($info->getName() == "SIGNAL STRENGTH") {
+								$info->save();
+								$info->event($etat);
+							}
+						}
+						break;
+					// pour un retour REPORT_NOISE_STRENGTH
+					case 4:
+						foreach ($info->getCmd() as $info) {
+							if ($info->getName() == "NOISE STRENGTH") {
+								$info->save();
+								$info->event($etat);
+							}
+						}
+						break;
+					// pour un retour STATUS_OFF ou STATUS_ON
+					case 5:
+						foreach ($info->getCmd() as $info) {
+							if ($info->getName() == "Etat") {
+								$info->save();
+								$info->event($etat);
+							}
+						}
+						break;
 				}
 			}
-			
+			// si retour du requete ALL_
 			elseif ($type_maj_etat == 2) {
 				foreach ($info->getCmd() as $info) {
 					if ($info->getName() == "Etat") {
@@ -307,33 +360,6 @@ class JeePlcBus extends eqLogic {
 					}
 				}
 			}
-			
-			elseif ($type_maj_etat == 3) {
-				if ($info->getlogicalId() == $logicalId) {
-					foreach ($info->getCmd() as $info) {
-						if ($info->getName() == "SIGNAL STRENGTH") {
-							$info->save();
-							$info->event($etat);
-						}
-					}				
-				}
-			}
-			
-			elseif ($type_maj_etat == 4) {
-				if ($info->getlogicalId() == $logicalId) {
-					foreach ($info->getCmd() as $info) {
-						if ($info->getName() == "NOISE STRENGTH") {
-							$info->save();
-							$info->event($etat);
-						}
-					}				
-				}
-			}
-			
-			else {
-				
-			}
-			
 		}
 	}
 	
@@ -458,6 +484,11 @@ class JeePlcBusCmd extends cmd {
 		socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'JeePlcBus'));
 		socket_write($socket, trim($message), strlen(trim($message)));
 		socket_close($socket);
+		if ($ack == 1) {
+			sleep(3);
+		} else {
+			sleep(1);
+		}
 	}
 
 	/*     * **********************Getteur Setteur*************************** */

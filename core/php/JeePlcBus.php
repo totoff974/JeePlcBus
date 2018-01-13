@@ -47,7 +47,7 @@ if (isset($result['devices'])) {
 		$logicalId = $datas['id'];
 		$JeePlcBus = JeePlcBus::byLogicalId($datas['id'], 'JeePlcBus');
 
-		if ($datas['command'] == "OFF" or $datas['command'] == "STATUS_OFF" or $datas['command'] == "ON" or $datas['command'] == "STATUS_ON" or $datas['command'] == "DIM" or $datas['command'] == "BRIGHT" or $datas['command'] == "PRESET_DIM") {
+		if ($datas['command'] == "OFF" or $datas['command'] == "ON" or $datas['command'] == "DIM" or $datas['command'] == "BRIGHT" or $datas['command'] == "PRESET_DIM") {
 				$etat = $datas['data1'];
 				$type_maj_etat = 1;
 		}
@@ -65,7 +65,12 @@ if (isset($result['devices'])) {
 		elseif ($datas['command'] == "REPORT_NOISE_STRENGTH") {
 				$etat = $datas['data1'];
 				$type_maj_etat = 4;
-		}	
+		}
+		
+		elseif ($datas['command'] == "STATUS_OFF" or $datas['command'] == "STATUS_ON") {
+				$etat = $datas['data1'];
+				$type_maj_etat = 5;
+		}
 		
 		else {
 				$etat = -1;
@@ -73,8 +78,7 @@ if (isset($result['devices'])) {
 		}
 		
 		if ($etat >= 0 and $etat <= 100) {
-			$JeePlcBus = JeePlcBus::Maj_etat($logicalId, $etat, $type_maj_etat);
-			log::add('JeePlcBus', 'debug', 'MaJ logicalId => ' . $logicalId . ' --> ' . $etat);			
+			JeePlcBus::Maj_etat($logicalId, $etat, $type_maj_etat, $datas['num_ack']);		
 		}
 
 		log::add('JeePlcBus', 'debug', '******* Socket Informations FIN ******* ');
