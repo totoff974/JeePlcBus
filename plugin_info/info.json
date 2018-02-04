@@ -9,6 +9,6 @@
 	"hasOwnDeamon" : true,
 	"hasDependency" : true,
 	"maxDependancyInstallTime" : 120,
-	"changelog" : "https://github.com/totoff974/JeePlcBus/blob/stable/doc/#language#/changelog.asciidoc",
-	"documentation" : "https://github.com/totoff974/JeePlcBus/blob/stable/doc/#language#/index.asciidoc"
+	"changelog" : "https://totoff974.github.io/JeePlcBus/#language#/changelog",
+	"documentation" : "https://totoff974.github.io/JeePlcBus/#language#/"
 }
