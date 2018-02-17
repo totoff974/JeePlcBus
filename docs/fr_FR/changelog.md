@@ -1,6 +1,11 @@
 Changelog détaillé :
 <https://github.com/totoff974/JeePlcBus/commits/stable>
 
+17-02-2018 20:05
+===
+
+-   Activation de la modification des commandes pour modifier les paramètres
+
 31-01-2018 21:35
 ===
 
