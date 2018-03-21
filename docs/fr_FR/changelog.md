@@ -1,6 +1,14 @@
 Changelog détaillé :
 <https://github.com/totoff974/JeePlcBus/commits/stable>
 
+
+
+21-03-2018 16:30
+===
+
+-   Force la majuscule à l'enregistrement du module pour l'ID correction du bug 
+    $this->setLogicalId(strtoupper($this->getLogicalId()));
+
 17-02-2018 20:05
 ===
 
