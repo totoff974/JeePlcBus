@@ -286,6 +286,14 @@ class JeePlcBus extends eqLogic {
 	}
 
 	public function Maj_etat($logicalId, $etat, $type_maj_etat, $num_ack) {
+		$id_allow_array = array();
+		$id_allow_array_unique = array();
+		
+		foreach (self::byType('JeePlcBus') as $id_allow) {
+			$id_allow_array[] = $id_allow->getlogicalId();
+		}
+		$id_allow_array_unique = array_unique($id_allow_array);
+		
 		foreach (self::byType('JeePlcBus') as $info) {
 			// pour un equipement uniquement
 			if (($info->getlogicalId() == $logicalId) and (($type_maj_etat != 2) or ($type_maj_etat != 0))) {
@@ -354,10 +362,13 @@ class JeePlcBus extends eqLogic {
 			}
 			// si retour du requete ALL_
 			elseif ($type_maj_etat == 2) {
-				foreach ($info->getCmd() as $info) {
-					if ($info->getName() == "Etat") {
-						$info->save();
-						$info->event($etat);
+				if (in_array($logicalId, $id_allow_array_unique)) {
+					log::add('JeePlcBus', 'debug', 'SPECIAL - id allow ok : ' . $logicalId);
+					foreach ($info->getCmd() as $info) {
+						if ($info->getName() == "Etat") {
+							$info->save();
+							$info->event($etat);
+						}
 					}
 				}
 			}
