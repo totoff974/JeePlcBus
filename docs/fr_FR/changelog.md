@@ -1,7 +1,10 @@
 Changelog détaillé :
 <https://github.com/totoff974/JeePlcBus/commits/stable>
 
+02-05-2018 15:00
+===
 
+-   Autorise une actionn de type ALL reçue par le controleur uniquement si ID existe sous JEEDOM
 
 21-03-2018 16:30
 ===
