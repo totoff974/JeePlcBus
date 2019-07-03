@@ -284,6 +284,11 @@ class jeedom_serial():
 			return self.port.read()
 		return None
 
+	def readline(self):
+		if self.port.inWaiting() != 0:
+			return self.port.readline()
+		return None
+
 	def readbytes(self,number):
 		buf = ''
 		for i in range(number):
