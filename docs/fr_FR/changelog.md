@@ -1,6 +1,11 @@
 Changelog détaillé :
 <https://github.com/totoff974/JeePlcBus/commits/stable>
 
+16-08-2019 11:00
+===
+
+-   Fix php 7.3 (object -> jeeObject)
+
 02-05-2018 15:00
 ===
 
